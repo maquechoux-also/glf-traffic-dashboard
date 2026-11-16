@@ -1,0 +1,55 @@
+name: Monthly update
+
+# Pulls last month's numbers from Google, commits data.js, then publishes the site.
+# (A commit made by this job does not start "Deploy site" by itself, so it is called below.)
+on:
+  schedule:
+    - cron: "0 14 4 * *"   # 4th of each month, 14:00 UTC (morning in Baton Rouge)
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "Month to pull, YYYY-MM (blank = last full month)"
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency: monthly-update
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Pull numbers
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          MONTH: ${{ github.event.inputs.month }}
+        run: python scripts/pull_data.py ${MONTH:+"$MONTH"}
+      - name: Check the file loads
+        run: node -e "global.window={};require('./data.js');const d=window.GLF_DATA;if(!d.totals.users||!d.search.impressions)process.exit(1)"
+      - name: Commit
+        id: commit
+        run: |
+          if git diff --quiet -- data.js; then echo "No change"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.js
+          git commit -m "Monthly update: $(node -e "global.window={};require('./data.js');console.log(window.GLF_DATA.period.label)")"
+          git pull --rebase origin main
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml

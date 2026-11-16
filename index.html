@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Grace Life Fellowship website report</title>
+<link rel="icon" href="assets/glf-white-bug.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  /* Layout: navy masthead, one reading column of white panels on the cool GLF ground. */
+  :root {
+    --navy: #081158; --navy-deep: #050d3d; --coral: #ec8675; --blue: #5b95d2; --teal: #d2e4e0; --gold: #eac18b;
+    --bg: #eef3f8; --surface: #ffffff; --ink: #1a1a2e; --muted: #5d6b7e; --line: #dde6f0;
+    --good: #1f7a55; --low: #96461f; --mark: #c2452f; --track: #d5dfeb;
+    --font: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font); }
+  a { color: #2c5f9e; }
+  a:focus-visible, summary:focus-visible, .scroll:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+  .mast a:focus-visible { outline-color: var(--gold); }
+  .mast { background: var(--navy); color: #fff; }
+  .wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .mast .wrap { display: flex; gap: 16px; align-items: center; padding-block: 22px; }
+  .mast img { width: 52px; height: 52px; flex: none; }
+  .eyebrow { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--gold); margin: 0; }
+  h1 { overflow-wrap: anywhere; font-size: clamp(1.35rem, 3.6vw, 1.9rem); font-weight: 800; margin: 2px 0 0; line-height: 1.2; text-wrap: balance; }
+  .mast .when { margin: 4px 0 0; color: rgba(255,255,255,.75); font-size: .92rem; }
+  main.wrap { padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+  h2 { color: var(--navy); font-size: 1.2rem; font-weight: 800; margin: 0 0 4px; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 0 0 14px; font-size: .95rem; max-width: 68ch; }
+  .lead { font-size: 1.12rem; margin: 0; max-width: 66ch; }
+  .lead b { color: var(--navy); }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+  .tile .k { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+  .tile .v { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .tile .b { font-size: .86rem; color: var(--muted); }
+  .tile .b b { color: var(--ink); font-weight: 700; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; font-weight: 400; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; white-space: nowrap; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td.path { word-break: break-word; }
+  tr:last-child td { border-bottom: 0; }
+  .glf { font-weight: 800; color: var(--navy); white-space: nowrap; }
+  .base { display: block; }
+  .base + .base { margin-top: 4px; }
+  .base .n { font-weight: 700; }
+  .base .g { color: var(--muted); font-size: .88rem; }
+  .none, .rownote { color: var(--muted); font-size: .88rem; }
+  .rownote { display: block; margin-top: 4px; }
+  .chip { display: inline-block; border-radius: 50px; padding: 1px 10px; font-size: .78rem; font-weight: 700; white-space: nowrap; }
+  .chip.above { background: #dff3ea; color: var(--good); }
+  .chip.below { background: #fbe9df; color: var(--low); }
+  .chip.near, .chip.info { background: var(--bg); color: var(--muted); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 28px; }
+  .cols > * { min-width: 0; }
+  .bars { display: flex; flex-direction: column; gap: 10px; }
+  .bar .top { display: flex; justify-content: space-between; gap: 8px; font-size: .95rem; }
+  .bar .top b { font-variant-numeric: tabular-nums; }
+  .track { position: relative; height: 12px; background: var(--track); border-radius: 6px; margin-top: 4px; }
+  .fill { position: absolute; inset: 0 auto 0 0; background: var(--navy); border-radius: 6px; min-width: 2px; }
+  .fill.soft { background: var(--blue); }
+  .mark { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--mark); border-radius: 2px; }
+  .legend { color: var(--muted); font-size: .86rem; margin: 12px 0 0; }
+  .legend i { display: inline-block; width: 3px; height: 14px; background: var(--mark); border-radius: 2px; vertical-align: -2px; margin-right: 6px; }
+  .zero { color: var(--low); font-weight: 700; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 18px; }
+  .fact { border-left: 4px solid var(--coral); padding-left: 14px; }
+  .fact .v { font-size: 1.9rem; font-weight: 800; color: var(--navy); line-height: 1.1; }
+  .fact p { margin: 2px 0 0; }
+  details { color: var(--muted); }
+  details summary { cursor: pointer; font-weight: 700; color: var(--navy); }
+  details ul { padding-left: 1.2em; max-width: 72ch; }
+  details li { margin: 6px 0; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  footer { color: var(--muted); font-size: .86rem; }
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <img src="assets/glf-white-bug.png" alt="Grace Life Fellowship" width="52" height="52">
+    <div>
+      <p class="eyebrow">Website report</p>
+      <h1>gracelifefellowship.org</h1>
+      <p class="when" id="when"></p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="lead" id="lead"></p>
+
+  <section aria-label="Headline numbers" class="tiles" id="tiles"></section>
+
+  <section class="panel" id="compare">
+    <h2>How Grace Life compares</h2>
+    <p class="sub">No published study measures week-to-week traffic for local church websites, so each row names the nearest group that has real data behind it. Monthly baselines are scaled to the same number of days as Grace Life's figures. Treat these as rough guides.</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="How Grace Life compares">
+      <table>
+        <thead><tr><th scope="col">Measure</th><th scope="col" class="num">Grace Life</th><th scope="col">Baseline</th><th scope="col"><span class="sr">Against the first baseline</span></th></tr></thead>
+        <tbody id="compare-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section class="panel" id="channels">
+      <h2>Where visits came from</h2>
+      <p class="sub">"Direct" means a typed address, a bookmark, a QR scan, or a link in an email or text.</p>
+      <div class="bars" id="channel-bars"></div>
+      <p class="legend" id="legend"><i></i></p>
+    </section>
+
+    <section class="panel" id="actions">
+      <h2>What visitors did</h2>
+      <p class="sub">Button clicks on the website. Completed gifts and submitted forms happen on other systems and are not counted here.</p>
+      <div class="scroll" tabindex="0" role="region" aria-label="What visitors did"><table><thead><tr><th scope="col">Action</th><th scope="col" class="num">Count</th></tr></thead><tbody id="actions-body"></tbody></table></div>
+      <p class="none" id="actions-note" style="margin:12px 0 0"></p>
+    </section>
+  </div>
+
+  <section class="panel" id="pages">
+    <h2>Most-viewed pages</h2>
+    <div class="scroll" tabindex="0" role="region" aria-label="Most-viewed pages"><table><thead><tr><th scope="col">Page</th><th scope="col" class="num">Views</th><th scope="col" class="num">Visitors</th></tr></thead><tbody id="pages-body"></tbody></table></div>
+  </section>
+
+  <section class="panel" id="search">
+    <h2>What people searched on Google</h2>
+    <p class="sub" id="search-sub"></p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Google searches"><table><thead><tr><th scope="col">Search</th><th scope="col" class="num">Clicks</th><th scope="col" class="num">Times shown</th><th scope="col" class="num">Position</th><th scope="col">Church's name?</th></tr></thead><tbody id="queries-body"></tbody></table></div>
+  </section>
+
+  <section class="panel" id="research">
+    <h2>Why the website matters for a church</h2>
+    <p class="sub" id="research-sub"></p>
+    <div class="facts" id="facts"></div>
+    <h3 id="helpful-title" style="margin:0 0 4px;font-size:1rem;color:var(--navy)"></h3>
+    <p class="sub" id="helpful-note"></p>
+    <div class="bars" id="helpful-bars"></div>
+  </section>
+
+  <details class="panel" id="notes">
+    <summary>Where these numbers come from</summary>
+    <ul id="notes-list"></ul>
+  </details>
+
+  <footer>Prepared by Echo Tango for Grace Life Fellowship. Totals only: this page holds no names, emails or other personal details.</footer>
+</main>
+
+<script src="data.js"></script>
+<script src="benchmarks.js"></script>
+<script>
+(function () {
+  var D = window.GLF_DATA, B = window.GLF_BENCHMARKS;
+  var $ = function (id) { return document.getElementById(id); };
+  var el = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  var n0 = function (v) { return Math.round(v).toLocaleString('en-US'); };
+  var n1 = function (v) { return (Math.round(v * 10) / 10).toFixed(1); };
+  var n2 = function (v) { return (Math.round(v * 100) / 100).toFixed(2); };
+  var pct = function (a, b) { return b ? (a / b) * 100 : null; };
+
+  var t = D.totals, s = D.search, fullMonth = D.period.days >= 28;
+  var chan = function (name) { var c = D.channels.filter(function (x) { return x.channel === name; })[0]; return c ? c.sessions : 0; };
+  var glf = {
+    engagement_rate: pct(t.engaged_sessions, t.sessions),
+    pages_per_session: t.sessions ? t.page_views / t.sessions : null,
+    sessions_per_user: t.users ? t.sessions / t.users : null,
+    users: t.users, sessions: t.sessions, page_views: t.page_views,
+    share_organic: pct(chan('Organic Search'), t.sessions),
+    share_direct: pct(chan('Direct'), t.sessions),
+    share_social: pct(chan('Organic Social'), t.sessions),
+    search_ctr: s.ctr_pct, search_position: s.position,
+    new_user_share: pct(t.new_users, t.users)
+  };
+  var show = function (row, v) {
+    if (v == null) return '—';
+    if (row.unit === '%') return n1(v) + '%';
+    if (row.unit === 'count') return n0(v);
+    return row.key === 'search_position' ? n1(v) : n2(v);
+  };
+  var rowByKey = {}; B.rows.forEach(function (r) { rowByKey[r.key] = r; });
+  var src = function (k) { return B.sources[k]; };
+  var firstBase = function (key) { var r = rowByKey[key]; return r && r.baselines[0]; };
+  // Monthly baselines are scaled to the length of the period shown (30.44 days in an average month).
+  var MONTH_DAYS = 30.44;
+  var scaled = function (r, x) { return r.kind === 'monthly' && !fullMonth ? x.value * D.period.days / MONTH_DAYS : x.value; };
+  var baseText = function (r, x) {
+    if (r.kind === 'monthly') return 'about ' + n0(scaled(r, x)) + (fullMonth ? ' a month' : ' in ' + D.period.days + ' days');
+    return x.text || show(r, x.value);
+  };
+
+  // Masthead and lead
+  $('when').textContent = D.period.label + (fullMonth ? '' : ' · ' + D.period.days + ' days, tracking began ' + new Date(D.tracking_start + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+  var lead = $('lead');
+  var add = function (text, bold) { lead.appendChild(bold ? el('b', null, text) : document.createTextNode(text)); };
+  add(n0(t.users), true); add(' people visited the website and made '); add(n0(t.sessions), true); add(' visits. ');
+  var eb = firstBase('engagement_rate');
+  add(n1(glf.engagement_rate) + '%', true); add(' of visits were engaged');
+  if (eb) add(', against ' + eb.value + '% for ' + src(eb.source).group.toLowerCase() + '. '); else add('. ');
+  add('Search brought '); add(n1(glf.share_organic) + '%', true); add(' of visits.');
+  var named = D.queries.filter(function (q) { return q.by_name; }).length;
+  if (D.queries.length) add(' ' + named + ' of the top ' + D.queries.length + ' Google searches were for the church by name.');
+
+  // Tiles
+  var tiles = [
+    { k: 'Visitors', v: n0(t.users), key: 'users', prev: function (p) { return n0(p.totals.users); } },
+    { k: 'Visits', v: n0(t.sessions), key: 'sessions', prev: function (p) { return n0(p.totals.sessions); } },
+    { k: 'Page views', v: n0(t.page_views), key: 'page_views', prev: function (p) { return n0(p.totals.page_views); } },
+    { k: 'Engaged visits', v: n1(glf.engagement_rate) + '%', key: 'engagement_rate', prev: function (p) { return p.totals.sessions ? n1(p.totals.engaged_sessions / p.totals.sessions * 100) + '%' : null; } },
+    { k: 'Clicks from Google', v: n0(s.clicks), key: null, prev: function (p) { return n0(p.search.clicks); } }
+  ];
+  tiles.forEach(function (x) {
+    var d = el('div', 'tile'); d.appendChild(el('span', 'k', x.k)); d.appendChild(el('span', 'v', x.v));
+    var b = el('span', 'b'), fb = x.key && firstBase(x.key);
+    if (fb) { b.appendChild(document.createTextNode(src(fb.source).group + ': ')); b.appendChild(el('b', null, baseText(rowByKey[x.key], fb))); }
+    else b.textContent = 'Search click rate ' + n1(s.ctr_pct) + '%';
+    d.appendChild(b);
+    var pv = D.previous && x.prev && x.prev(D.previous);
+    if (pv != null && pv !== false) d.appendChild(el('span', 'b', D.previous.period.label + ': ' + pv));
+    $('tiles').appendChild(d);
+  });
+
+  // Comparison table
+  B.rows.forEach(function (r) {
+    var v = glf[r.key], tr = el('tr');
+    var rh = el('th', null, r.label); rh.scope = 'row'; tr.appendChild(rh);
+    var g = el('td', 'num glf', show(r, v));
+    tr.appendChild(g);
+    var b = el('td');
+    if (!r.baselines.length) b.appendChild(el('span', 'none', r.none || 'No published benchmark.'));
+    r.baselines.forEach(function (x) {
+      var so = src(x.source), line = el('span', 'base');
+      line.appendChild(el('span', 'n', baseText(r, x)));
+      line.appendChild(document.createTextNode(' '));
+      var a = el('a', 'g', so.group); a.href = so.url; a.target = '_blank'; a.rel = 'noopener'; a.title = so.name + ': ' + so.detail;
+      line.appendChild(a); b.appendChild(line);
+    });
+    if (r.kind === 'monthly' && !fullMonth && r.baselines.length) b.appendChild(el('span', 'rownote', 'Scaled from ' + n0(r.baselines[0].value) + ' a month to match these ' + D.period.days + ' days.' + (r.key === 'users' ? ' Visitor counts do not scale exactly, so this is approximate.' : '')));
+    if (r.note) b.appendChild(el('span', 'rownote', r.note));
+    tr.appendChild(b);
+    var c = el('td'), fb = r.baselines[0];
+    if (fb && fb.value != null && r.better && v != null) {
+      var ratio = v / scaled(r, fb), up = r.better === 'higher' ? ratio : 1 / ratio;
+      var cls = up >= 1.05 ? 'above' : up <= 0.95 ? 'below' : 'near';
+      var gname = src(fb.source).group.toLowerCase();
+      c.appendChild(el('span', 'chip ' + cls, cls === 'above' ? 'Above ' + gname : cls === 'below' ? 'Below ' + gname : 'About the same as ' + gname));
+    }
+    tr.appendChild(c); $('compare-body').appendChild(tr);
+  });
+
+  // Channels
+  var maxS = Math.max.apply(null, D.channels.map(function (c) { return c.sessions; }));
+  var markFor = { 'Direct': 'share_direct', 'Organic Search': 'share_organic' };
+  var maxShare = pct(maxS, t.sessions);
+  Object.keys(markFor).forEach(function (k) { var fb = firstBase(markFor[k]); if (fb) maxShare = Math.max(maxShare, fb.value); });
+  D.channels.forEach(function (c) {
+    var share = pct(c.sessions, t.sessions), d = el('div', 'bar'), top = el('div', 'top');
+    top.appendChild(el('span', null, c.channel));
+    top.appendChild(el('b', null, n0(c.sessions) + ' · ' + n1(share) + '%'));
+    var tr = el('div', 'track'), f = el('div', 'fill'); f.style.width = (share / maxShare * 100) + '%'; tr.appendChild(f);
+    var fb = markFor[c.channel] && firstBase(markFor[c.channel]);
+    if (fb) { var m = el('div', 'mark'); m.style.left = 'calc(' + (fb.value / maxShare * 100) + '% - 1.5px)'; m.title = src(fb.source).group + ': ' + fb.value + '%'; tr.appendChild(m); }
+    d.appendChild(top); d.appendChild(tr); $('channel-bars').appendChild(d);
+  });
+
+  var lb = firstBase('share_direct');
+  if (lb) $('legend').appendChild(document.createTextNode('Median share for ' + src(lb.source).group.toLowerCase())); else $('legend').hidden = true;
+
+  // Actions, pages, queries
+  D.actions.forEach(function (a) {
+    var tr = el('tr'); tr.appendChild(el('td', null, a.label));
+    tr.appendChild(el('td', 'num' + (a.count === 0 ? ' zero' : ''), n0(a.count))); $('actions-body').appendChild(tr);
+  });
+  $('actions-note').textContent = B.actions_note;
+  D.pages.forEach(function (p) {
+    var tr = el('tr'); tr.appendChild(el('td', 'path', p.page));
+    tr.appendChild(el('td', 'num', n0(p.views))); tr.appendChild(el('td', 'num', n0(p.users))); $('pages-body').appendChild(tr);
+  });
+  $('search-sub').textContent = n0(s.clicks) + ' clicks from ' + (s.impressions_rounded ? 'about ' : '') + n0(s.impressions) +
+    ' appearances in Google results. Showing the top ' + D.queries.length + ' of ' + n0(s.queries_total) + ' searches. Position 1 is the top of the results, so lower is better. Google hides rare searches for privacy.' + (s.other_clicks != null ? ' Searches that might name a person are left out of this list.' : '');
+  D.queries.forEach(function (q) {
+    var tr = el('tr'); tr.appendChild(el('td', null, q.query));
+    tr.appendChild(el('td', 'num', n0(q.clicks))); tr.appendChild(el('td', 'num', n0(q.impressions)));
+    tr.appendChild(el('td', 'num', n1(q.position))); tr.appendChild(el('td', null, q.by_name ? 'Yes' : 'No')); $('queries-body').appendChild(tr);
+  });
+
+  // Research context
+  var cs = src(B.context.source), rs = $('research-sub');
+  rs.appendChild(document.createTextNode('From '));
+  var ca = el('a', null, cs.name); ca.href = cs.url; ca.target = '_blank'; ca.rel = 'noopener'; rs.appendChild(ca);
+  rs.appendChild(document.createTextNode(' (' + cs.detail + '). These describe people, so they are background and not a score for the site.'));
+  B.context.facts.forEach(function (f) { var d = el('div', 'fact'); d.appendChild(el('div', 'v', f.value)); d.appendChild(el('p', null, f.text)); $('facts').appendChild(d); });
+  $('helpful-title').textContent = B.context.helpful_title;
+  $('helpful-note').textContent = B.context.helpful_note;
+  B.context.helpful.forEach(function (h) {
+    var d = el('div', 'bar'), top = el('div', 'top'); top.appendChild(el('span', null, h.label)); top.appendChild(el('b', null, h.pct + '%'));
+    var tr = el('div', 'track'), f = el('div', 'fill soft'); f.style.width = h.pct + '%'; tr.appendChild(f);
+    d.appendChild(top); d.appendChild(tr); $('helpful-bars').appendChild(d);
+  });
+
+  // Notes
+  var notes = [
+    'Grace Life numbers: Google Analytics and Google Search Console, ' + D.period.label + ', gathered ' + new Date(D.pulled + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '. ' + D.how,
+    'An engaged visit lasted longer than 10 seconds, viewed two or more pages, or included one of the key actions Google is set to count.',
+    'Search Console runs two to three days behind, so the last days of a period can read low at first.',
+    'Not included: numbers from other tools, welcome-gift counts, completed gifts and submitted visitor cards.',
+    'Baselines were each checked against their source on ' + new Date(B.checked + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '. Sources:'
+  ];
+  notes.forEach(function (x) { $('notes-list').appendChild(el('li', null, x)); });
+  Object.keys(B.sources).forEach(function (k) {
+    var so = B.sources[k], li = el('li'), a = el('a', null, so.name); a.href = so.url; a.target = '_blank'; a.rel = 'noopener';
+    li.appendChild(a); li.appendChild(document.createTextNode(' — ' + so.group + ': ' + so.detail + '.')); $('notes-list').appendChild(li);
+  });
+})();
+</script>
+</body>
+</html>
